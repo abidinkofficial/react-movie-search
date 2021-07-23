@@ -1,6 +1,6 @@
 import { StarIcon } from "@heroicons/react/solid"
 
-const Card = () => {
+const Card = ({ movie }) => {
   return (
     <div className="group w-52 h-96 flex flex-col bg-gray-100 hover:bg-gray-200 rounded-md my-5 mx-2 p-3 transition-colors cursor-pointer shadow-md">
       <div className="relative transform group-hover:scale-105 transition-all">
@@ -9,10 +9,10 @@ const Card = () => {
       </div>
       <div className="h-full mt-3 flex flex-col justify-between">
         <div>
-          <h2 className="group-hover:text-gray-900 transition-colors">Trollhunters: Rise of the Titans</h2>
+          <h2 className="group-hover:text-gray-900 transition-colors">{movie.title}</h2>
         </div>
         <div>
-          <h3 className="text-xs">Released on 2021-07-21</h3>
+          <h3 className="text-xs">Released on {movie.release_date}</h3>
         </div>
       </div>
     </div>
