@@ -15,7 +15,7 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors }) => 
   }, [dispatch])
 
   useEffect(() => {
-    trendings?.results?.map((result) => setTrendingsCards((trendingsCards) => [ ...trendingsCards, <Card movie={result} key={result.id} />]))
+    trendings?.results?.map((result) => setTrendingsCards((trendingsCards) => [...trendingsCards, <Card movie={result} key={result.id} />]))
   }, [trendings])
 
   return (
@@ -24,7 +24,10 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors }) => 
       <main>
         <Search />
         <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-16 py-5">
-          <TrendingSwitch />
+          <div className="flex my-5">
+            <h2 className="text-2xl font-semibold mr-5">Trending movies:</h2>
+            <TrendingSwitch />
+          </div>
           <div className="flex flex-wrap justify-center">
             {trendingsCards}
           </div>
