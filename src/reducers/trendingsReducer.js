@@ -1,4 +1,4 @@
-import * as actions from '../actions/trendingActions'
+import * as actions from '../actions/trendingsActions'
 
 export const initialState = {
   loading: false,
