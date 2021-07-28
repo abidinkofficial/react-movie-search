@@ -5,6 +5,7 @@ import {
   Route
 } from "react-router-dom"
 
+import ScrollToTop from "./components/ScrollToTop"
 import Home from "./pages/Home"
 import Movie from "./pages/Movie"
 
@@ -12,6 +13,7 @@ const App = () => {
   return (
     <div className="font-sans antialiased text-gray-500">
       <Router>
+        <ScrollToTop />
         <Switch>
           <Route exact path="/">
             <Home />

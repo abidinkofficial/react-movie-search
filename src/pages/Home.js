@@ -3,8 +3,7 @@ import { connect } from "react-redux"
 import { fetchTrendings } from "../actions/trendingsActions"
 import { search } from "../actions/searchActions"
 import { clearMovie } from "../actions/movieActions"
-import { useHistory } from "react-router"
-import { Link } from "react-router-dom"
+import { clearSimilarMovies } from "../actions/similarMoviesActions"
 
 import Header from "../components/Header"
 import Search from "../components/Search"
@@ -12,7 +11,6 @@ import TrendingSwitch from "../components/TrendingSwitch"
 import Card from "../components/Card"
 
 const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searchLoading, searchResults, searchHasErrors }) => {
-  let history = useHistory()
 
   const [trendingsCards, setTrendingsCards] = useState([])
   const [searchCards, setSearchCards] = useState([])
@@ -22,6 +20,7 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
 
   useEffect(() => {
     dispatch(clearMovie())
+    dispatch(clearSimilarMovies())
   }, [dispatch])
 
   useEffect(() => {
@@ -34,17 +33,17 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
 
   useEffect(() => {
     setTrendingsCards([])
-    trendings?.results?.map((result) => setTrendingsCards((trendingsCards) => [...trendingsCards, <Link to={`/movie/${result.id}`} key={result.id}><Card movie={result} /></Link>]))
-  }, [trendings, history])
+    trendings?.results?.map((result) => setTrendingsCards((trendingsCards) => [...trendingsCards, <Card movie={result} key={result.id} />]))
+  }, [trendings])
 
   useEffect(() => {
     setSearchCards([])
-    searchResults?.results?.map((result) => setSearchCards((searchCards) => [...searchCards, <Link to={`/movie/${result.id}`} key={result.id}><Card movie={result} /></Link>]))
-  }, [searchResults, history])
+    searchResults?.results?.map((result) => setSearchCards((searchCards) => [...searchCards, <Card movie={result} key={result.id} />]))
+  }, [searchResults])
 
   return (
     <>
-      <Header />
+      <Header context="home" />
       <main>
         <Search searchState={searchState} setSearchState={setSearchState} searchString={searchString} setSearchString={setSearchString} />
         {

@@ -21,7 +21,7 @@ export function fetchMovie(id) {
     dispatch(getMovie());
 
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
+      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`)
       const data = await response.json()
 
       dispatch(getMovieSuccess(data))
