@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { fetchTrendings } from "../actions/trendingsActions"
 import { search } from "../actions/searchActions"
+import { clearMovie } from "../actions/movieActions"
+import { useHistory } from "react-router"
+import { Link } from "react-router-dom"
 
 import Header from "../components/Header"
 import Search from "../components/Search"
@@ -9,11 +12,17 @@ import TrendingSwitch from "../components/TrendingSwitch"
 import Card from "../components/Card"
 
 const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searchLoading, searchResults, searchHasErrors }) => {
+  let history = useHistory()
+
   const [trendingsCards, setTrendingsCards] = useState([])
   const [searchCards, setSearchCards] = useState([])
   const [trendingsTime, setTrendingsTime] = useState("day")
   const [searchState, setSearchState] = useState(false)
   const [searchString, setSearchString] = useState("");
+
+  useEffect(() => {
+    dispatch(clearMovie())
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(fetchTrendings(trendingsTime))
@@ -25,13 +34,13 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
 
   useEffect(() => {
     setTrendingsCards([])
-    trendings?.results?.map((result) => setTrendingsCards((trendingsCards) => [...trendingsCards, <Card movie={result} key={result.id} />]))
-  }, [trendings])
+    trendings?.results?.map((result) => setTrendingsCards((trendingsCards) => [...trendingsCards, <Link to={`/movie/${result.id}`} key={result.id}><Card movie={result} /></Link>]))
+  }, [trendings, history])
 
   useEffect(() => {
     setSearchCards([])
-    searchResults?.results?.map((result) => setSearchCards((searchCards) => [...searchCards, <Card movie={result} key={result.id} />]))
-  }, [searchResults])
+    searchResults?.results?.map((result) => setSearchCards((searchCards) => [...searchCards, <Link to={`/movie/${result.id}`} key={result.id}><Card movie={result} /></Link>]))
+  }, [searchResults, history])
 
   return (
     <>
@@ -72,7 +81,7 @@ const mapStateToProps = (state) => ({
 
   searchLoading: state.searchReducer.loading,
   searchResults: state.searchReducer.results,
-  searchHasErrors: state.searchReducer.hasErrors,
+  searchHasErrors: state.searchReducer.hasErrors
 })
 
 export default connect(mapStateToProps)(Home);

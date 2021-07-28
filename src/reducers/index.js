@@ -2,10 +2,12 @@ import { combineReducers } from "redux"
 
 import trendingsReducer from "./trendingsReducer"
 import searchReducer from "./searchReducer"
+import movieReducer from "./movieReducer"
 
 const reducer = combineReducers({
   trendings: trendingsReducer,
-  searchReducer: searchReducer
+  searchReducer: searchReducer,
+  movie: movieReducer
 })
 
 export default reducer
