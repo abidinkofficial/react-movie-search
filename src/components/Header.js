@@ -1,6 +1,15 @@
 import { LightningBoltIcon } from '@heroicons/react/outline'
+import { generateRandomId } from '../actions/otherActions';
+import { useHistory } from "react-router"
 
 const Header = ({ context, ...props }) => {
+  let history = useHistory()
+
+  const goToRandomMovie = async () => {
+    const id = await generateRandomId()
+    history.push(`/movie/${id}`)
+  }
+
   return (
     <>
       {context === "home" &&
@@ -11,7 +20,7 @@ const Header = ({ context, ...props }) => {
           </div>
           <div className="mx-auto max-w-screen-2xl flex items-center justify-between py-8">
             <h1 className="text-2xl font-semibold text-gray-100">Search movies by typing below, or bring a random one.</h1>
-            <button href="/" className="flex items-center bg-indigo-500 hover:bg-indigo-600 rounded-md hover:shadow-md py-4 px-12 text-gray-50 transition-colors font-semibold"><LightningBoltIcon className="h-5 w-5 mr-2" />Random Movie!</button>
+            <button href="/" onClick={goToRandomMovie} className="flex items-center bg-indigo-500 hover:bg-indigo-600 rounded-md hover:shadow-md py-4 px-12 text-gray-50 transition-colors font-semibold"><LightningBoltIcon className="h-5 w-5 mr-2" />Random Movie!</button>
           </div>
         </header>}
       {context === "movie" &&

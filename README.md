@@ -10,8 +10,8 @@
 
 ✅ Movie search function
 
-🟦 Movie detail page and fetching similiar movies
+✅ Movie detail page and fetching similiar movies
 
-🟦 Random movie button functionality
+✅ Random movie button functionality
 
-🟦 Bug fixes, design changes and refactoring the strange function names :(
+🟦 Bug fixes, design changes, loading states and refactoring the strange function names :(
