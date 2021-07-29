@@ -9,6 +9,7 @@ import Header from "../components/Header"
 import Search from "../components/Search"
 import TrendingSwitch from "../components/TrendingSwitch"
 import Card from "../components/Card"
+import LoadMoreCard from "../components/LoadMoreCard"
 
 const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searchLoading, searchResults, searchHasErrors }) => {
 
@@ -16,7 +17,9 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
   const [searchCards, setSearchCards] = useState([])
   const [trendingsTime, setTrendingsTime] = useState("day")
   const [searchState, setSearchState] = useState(false)
-  const [searchString, setSearchString] = useState("");
+  const [searchString, setSearchString] = useState("")
+  const [trendingsPage, setTrendingsPage] = useState(1)
+  const [searchPage, setSearchPage] = useState("1")
 
   useEffect(() => {
     dispatch(clearMovie())
@@ -24,20 +27,28 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(fetchTrendings(trendingsTime))
-  }, [dispatch, trendingsTime])
+    dispatch(fetchTrendings(trendingsTime, trendingsPage))
+  }, [dispatch, trendingsTime, trendingsPage])
 
   useEffect(() => {
-    searchString && dispatch(search(searchString))
-  }, [dispatch, searchString])
+    searchString && dispatch(search(searchString, searchPage))
+  }, [dispatch, searchString, searchPage])
 
   useEffect(() => {
-    setTrendingsCards([])
+    setSearchCards([])
+    setSearchPage(1)
+  }, [searchString])
+
+  useEffect(() => {
     trendings?.results?.map((result) => setTrendingsCards((trendingsCards) => [...trendingsCards, <Card movie={result} key={result.id} />]))
   }, [trendings])
 
   useEffect(() => {
-    setSearchCards([])
+    setTrendingsCards([])
+    setTrendingsPage(1)
+  }, [trendingsTime])
+
+  useEffect(() => {
     searchResults?.results?.map((result) => setSearchCards((searchCards) => [...searchCards, <Card movie={result} key={result.id} />]))
   }, [searchResults])
 
@@ -53,8 +64,9 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
                 <div className="flex my-5">
                   <h2 className="text-2xl font-semibold mr-5">Search results:</h2>
                 </div>
-                <div className="flex flex-wrap justify-center">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
                   {searchCards}
+                  <LoadMoreCard page={searchPage} setPage={setSearchPage} />
                 </div>
               </div>
             </div> :
@@ -63,8 +75,9 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
                 <h2 className="text-2xl font-semibold mr-5">Trending movies:</h2>
                 <TrendingSwitch trendingsTime={trendingsTime} setTrendingsTime={setTrendingsTime} />
               </div>
-              <div className="flex flex-wrap justify-center">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
                 {trendingsCards}
+                <LoadMoreCard page={trendingsPage} setPage={setTrendingsPage} />
               </div>
             </div>
         }

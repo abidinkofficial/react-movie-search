@@ -13,12 +13,12 @@ export const getTrendingsSuccess = (trendings) => ({
 
 export const getTrendingsFail = () => ({ type: GET_TRENDINGS_FAIL })
 
-export function fetchTrendings(trendingsTime) {
+export function fetchTrendings(trendingsTime, page = 1) {
   return async (dispatch) => {
     dispatch(getTrendings());
 
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/trending/movie/${trendingsTime}?api_key=${API_KEY}`)
+      const response = await fetch(`https://api.themoviedb.org/3/trending/movie/${trendingsTime}?api_key=${API_KEY}&page=${page}`)
       const data = await response.json()
 
       dispatch(getTrendingsSuccess(data))

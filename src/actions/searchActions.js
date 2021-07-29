@@ -13,12 +13,12 @@ export const makeSearchSuccess = (results) => ({
 
 export const makeSearchFail = () => ({ type: MAKE_SEARCH_FAIL })
 
-export function search(query) {
+export function search(query, page) {
   return async (dispatch) => {
     dispatch(makeSearch());
 
     try {
-      const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${API_KEY}`)
+      const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${API_KEY}&page=${page}`)
       const data = await response.json()
 
       dispatch(makeSearchSuccess(data))
