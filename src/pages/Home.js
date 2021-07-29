@@ -4,6 +4,7 @@ import { fetchTrendings } from "../actions/trendingsActions"
 import { search } from "../actions/searchActions"
 import { clearMovie } from "../actions/movieActions"
 import { clearSimilarMovies } from "../actions/similarMoviesActions"
+import { useHistory } from "react-router"
 
 import Header from "../components/Header"
 import Search from "../components/Search"
@@ -12,6 +13,7 @@ import Card from "../components/Card"
 import LoadMoreCard from "../components/LoadMoreCard"
 
 const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searchLoading, searchResults, searchHasErrors }) => {
+  const history = useHistory()
 
   const [trendingsCards, setTrendingsCards] = useState([])
   const [searchCards, setSearchCards] = useState([])
@@ -52,9 +54,19 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
     searchResults?.results?.map((result) => setSearchCards((searchCards) => [...searchCards, <Card movie={result} key={result.id} />]))
   }, [searchResults])
 
+  const refreshHome = () => {
+    dispatch(clearMovie())
+    dispatch(clearSimilarMovies())
+    setTrendingsCards([])
+    setTrendingsPage(1)
+    setTrendingsTime("day")
+    dispatch(fetchTrendings(trendingsTime, trendingsPage))
+    history.push("/")
+  }
+
   return (
     <>
-      <Header context="home" />
+      <Header context="home" refreshHome={refreshHome} />
       <main>
         <Search searchState={searchState} setSearchState={setSearchState} searchString={searchString} setSearchString={setSearchString} />
         {
