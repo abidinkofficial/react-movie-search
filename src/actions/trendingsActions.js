@@ -22,6 +22,7 @@ export function fetchTrendings(trendingsTime, page = 1) {
       const data = await response.json()
 
       dispatch(getTrendingsSuccess(data))
+      return data
     } catch (error) {
       dispatch(getTrendingsFail())
     }

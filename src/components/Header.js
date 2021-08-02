@@ -2,7 +2,7 @@ import { LightningBoltIcon } from '@heroicons/react/outline'
 import { generateRandomId } from '../actions/otherActions';
 import { useHistory } from "react-router"
 
-const Header = ({ context, ...props }) => {
+const Header = ({ context, refresh }) => {
   let history = useHistory()
 
   const goToRandomMovie = async () => {
@@ -15,7 +15,7 @@ const Header = ({ context, ...props }) => {
       {context === "home" &&
         <header className="bg-gradient-to-r from-indigo-900 to-indigo-700 px-4 sm:px-6 lg:px-16 pt-8">
           <div className="mx-auto max-w-screen-2xl flex items-center justify-between border-b border-gray-900 border-opacity-30 py-4">
-            <div onClick={props.refreshHome} className="cursor-pointer"><img src={process.env.PUBLIC_URL + "/logo-light.svg"} alt="movie search logo" /></div>
+            <div onClick={refresh} className="cursor-pointer"><img src={process.env.PUBLIC_URL + "/logo-light.svg"} alt="movie search logo" /></div>
             <a className="github-button" href="https://github.com/abidinkofficial" data-size="large" aria-label="Follow @abidinkofficial on GitHub">Follow @abidinkofficial</a>
           </div>
           <div className="mx-auto max-w-screen-2xl flex items-center justify-between py-8">
