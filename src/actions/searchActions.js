@@ -22,6 +22,7 @@ export function search(query, page) {
       const data = await response.json()
 
       dispatch(makeSearchSuccess(data))
+      return data
     } catch (error) {
       dispatch(makeSearchFail())
     }

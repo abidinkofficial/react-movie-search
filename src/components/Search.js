@@ -1,15 +1,10 @@
 import { SearchIcon } from "@heroicons/react/outline"
-import { useEffect } from "react";
 
-const Search = ({ searchState, setSearchState, searchString, setSearchString }) => {
-
-  useEffect(() => {
-    searchString ? setSearchState(true) : setSearchState(false)
-  }, [searchString, setSearchState])
+const Search = ({ searchQuery, setSearchQuery }) => {
 
   const handleSearchChange = (event) => {
     event.preventDefault();
-    setSearchString(event.target.value)
+    setSearchQuery(event.target.value)
   }
 
   return (
@@ -18,7 +13,7 @@ const Search = ({ searchState, setSearchState, searchString, setSearchString }) 
         <label className="flex items-center mr-5" htmlFor="search-input">
           <SearchIcon className="h-5 w-5" />
         </label>
-        <input type="text" id="search-input" placeholder="Find a movie" onChange={handleSearchChange} value={searchString} className="w-full outline-none placeholder-gray-500 focus:placeholder-gray-300 py-5"/>
+        <input type="text" id="search-input" placeholder="Find a movie" onChange={handleSearchChange} value={searchQuery} className="w-full outline-none placeholder-gray-500 focus:placeholder-gray-300 py-5"/>
       </div>
     </form>
   )
