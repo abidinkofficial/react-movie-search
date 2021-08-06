@@ -10,6 +10,7 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
   const id = useParams().id
 
   const [similarCards, setSimilarCards] = useState([])
+  const [customLoading, setCustomLoading] = useState(false)
 
   useEffect(() => {
     dispatch(fetchMovie(id))
@@ -18,8 +19,12 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
 
   useEffect(() => {
     setSimilarCards([])
-    similarMovies?.results?.slice(0,5).map((result) => setSimilarCards((similarCards) => [...similarCards, <Card movie={result} key={result.id} />]))
+    similarMovies?.results?.slice(0, 5).map((result) => setSimilarCards((similarCards) => [...similarCards, <Card movie={result} key={result.id} />]))
   }, [similarMovies])
+
+  useEffect(() => {
+    (movieLoading || similarMoviesLoading) ? setCustomLoading(true) : setTimeout(() => setCustomLoading(false), 500)
+  }, [movieLoading, similarMoviesLoading])
 
   return (
     <>
@@ -28,20 +33,38 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
           <Header context="movie" movie={movie} />
           <main>
             <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-16 py-5 pt-10">
-              <div className="mx-auto flex flex-col md:flex-row">
-                <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt="movie poster" className="rounded-md overflow-hidden md:mr-5 min-w-min max-w-max" />
-                <div>
-                  <h2 className="text-2xl font-semibold text-gray-800 mb-3">{movie.title}</h2>
-                  <h3 className="text-xl font-semibold mb-3">{movie.tagline}</h3>
-                  <p>{movie.overview}</p>
-                </div>
-              </div>
-              <div className="flex my-5">
-                <h2 className="text-2xl font-semibold mr-5">Similar movies:</h2>
-              </div>
-              <div className="flex flex-wrap justify-center">
-                {similarCards}
-              </div>
+              {
+                customLoading ?
+                  <>
+                    <div className="mx-auto flex flex-col md:flex-row animate-pulsefast">
+                      <div className="rounded-md w-64 h-96 md:mr-5 bg-gray-300"></div>
+                      <div>
+                        <div className="rounded-md w-60 h-12 md:mr-5 bg-gray-300 mb-3"></div>
+                        <div className="rounded-md w-96 h-8 md:mr-5 bg-gray-300 mb-3"></div>
+                        <div className="rounded-md w-72 h-5 md:mr-5 bg-gray-300 mb-3"></div>
+                        <div className="rounded-md w-64 h-5 md:mr-5 bg-gray-300 mb-3"></div>
+                        <div className="rounded-md w-60 h-5 md:mr-5 bg-gray-300 mb-3"></div>
+                        <div className="rounded-md w-56 h-5 md:mr-5 bg-gray-300 mb-3"></div>
+                      </div>
+                    </div>
+                  </> :
+                  <>
+                    <div className="mx-auto flex flex-col md:flex-row animate-loading-fade">
+                      <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt="movie poster" className="rounded-md overflow-hidden md:mr-5 min-w-min max-w-max" />
+                      <div>
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-3">{movie.title}</h2>
+                        <h3 className="text-xl font-semibold mb-3">{movie.tagline}</h3>
+                        <p>{movie.overview}</p>
+                      </div>
+                    </div>
+                    <div className="flex my-5 animate-loading-fade">
+                      <h2 className="text-2xl font-semibold mr-5">Similar movies:</h2>
+                    </div>
+                    <div className="flex flex-wrap justify-center animate-loading-fade">
+                      {similarCards}
+                    </div>
+                  </>
+              }
             </div>
           </main>
         </>}

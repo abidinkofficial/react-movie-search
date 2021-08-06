@@ -1,13 +1,18 @@
 import { LightningBoltIcon } from '@heroicons/react/outline'
 import { generateRandomId } from '../actions/otherActions';
 import { useHistory } from "react-router"
+import { useState } from 'react';
+import Spinner from './Spinner';
 
 const Header = ({ context, refresh }) => {
   let history = useHistory()
 
+  const [randomMovieLoading, setRandomMovieLoading] = useState(false)
+
   const goToRandomMovie = async () => {
+    setRandomMovieLoading(true)
     const id = await generateRandomId()
-    history.push(`/movie/${id}`)
+    setTimeout(() => history.push(`/movie/${id}`), 500)
   }
 
   return (
@@ -20,7 +25,7 @@ const Header = ({ context, refresh }) => {
           </div>
           <div className="mx-auto max-w-screen-2xl flex items-center justify-between py-8">
             <h1 className="text-2xl font-semibold text-gray-100">Search movies by typing below, or bring a random one.</h1>
-            <button href="/" onClick={goToRandomMovie} className="flex items-center bg-indigo-500 hover:bg-indigo-600 rounded-md hover:shadow-md py-4 px-12 text-gray-50 transition-colors font-semibold"><LightningBoltIcon className="h-5 w-5 mr-2" />Random Movie!</button>
+            <button href="/" onClick={goToRandomMovie} className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-md hover:shadow-md py-4 px-12 text-gray-50 transition-colors font-semibold w-64 h-16">{randomMovieLoading ? <><Spinner tone="50" className="h-5 w-5" /></> : <><LightningBoltIcon className="h-5 w-5 mr-2" />Random Movie!</>}</button>
           </div>
         </header>}
       {context === "movie" &&
