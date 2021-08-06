@@ -6,6 +6,22 @@ module.exports = {
       scale: {
         '102': '1.02',
         '103': '1.03'
+      },
+      animation: {
+        'card-scale': 'card-scale 0.5s ease',
+        'loading-fade': 'loading-fade 0.5s',
+        pulsefast: 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;'
+      },
+      keyframes: {
+        'card-scale': {
+          '0%': { transform: 'scale(0.9)' },
+          '50%': { transform: 'scale(0.9)' },
+          '100%': { transform: 'scale(1)' }
+        },
+        'loading-fade': {
+          '0%': { opacity: '0'},
+          '100%': { opacity: '1'}
+        }
       }
     },
     fontFamily: {
