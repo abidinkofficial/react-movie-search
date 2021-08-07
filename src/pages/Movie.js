@@ -5,6 +5,7 @@ import { fetchSimilarMovies } from "../actions/similarMoviesActions"
 import { useParams } from "react-router"
 import Header from "../components/Header"
 import Card from "../components/Card"
+import ProductionCompanies from "../components/ProductionCompanies"
 
 const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, similarMoviesLoading, similarMoviesFail, ...props }) => {
   const id = useParams().id
@@ -49,12 +50,14 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
                     </div>
                   </> :
                   <>
-                    <div className="mx-auto flex flex-col md:flex-row animate-loading-fade">
-                      <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt="movie poster" className="rounded-md overflow-hidden md:mr-5 min-w-min max-w-max" />
-                      <div>
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-3">{movie.title}</h2>
-                        <h3 className="text-xl font-semibold mb-3">{movie.tagline}</h3>
-                        <p>{movie.overview}</p>
+                    <div style={{ backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path})`, backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
+                      <div className="mx-auto flex flex-col md:flex-row animate-loading-fade bg-gray-800 bg-opacity-75">
+                        <img src={`https://image.tmdb.org/t/p/w300${movie?.poster_path}`} alt="movie poster" className="rounded-md overflow-hidden md:mr-5 min-w-min max-w-max" />
+                        <div>
+                          <h2 className="text-2xl font-semibold text-gray-50 mb-3">{movie.title}</h2>
+                          <h3 className="text-xl font-semibold mb-3 text-gray-200">{movie.tagline}</h3>
+                          <p className="text-gray-200">{movie.overview}</p>
+                        </div>
                       </div>
                     </div>
                     <div className="flex my-5 animate-loading-fade">
@@ -63,11 +66,13 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
                     <div className="flex flex-wrap justify-center animate-loading-fade">
                       {similarCards}
                     </div>
+                    {/* <ProductionCompanies companies={movie.production_companies} /> */}
                   </>
               }
             </div>
           </main>
-        </>}
+        </>
+      }
     </>
   )
 }
