@@ -6,16 +6,12 @@ export const CLEAR_MOVIE = "CLEAR_MOVIE"
 const API_KEY = process.env.REACT_APP_API_KEY
 
 export const getMovie = () => ({ type: GET_MOVIE })
-
 export const getMovieSuccess = (movie) => ({
   type: GET_MOVIE_SUCCESS,
   payload: movie
 })
-
 export const getMovieFail = () => ({ type: GET_MOVIE_FAIL })
-
 export const clearMovie = () => ({ type: CLEAR_MOVIE })
-
 export function fetchMovie(id) {
   return async (dispatch) => {
     dispatch(getMovie());
