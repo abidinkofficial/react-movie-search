@@ -5,7 +5,6 @@ import { fetchSimilarMovies } from "../actions/similarMoviesActions"
 import { useParams } from "react-router"
 import Header from "../components/Header"
 import Card from "../components/Card"
-import ProductionCompanies from "../components/ProductionCompanies"
 
 const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, similarMoviesLoading, similarMoviesFail, ...props }) => {
   const id = useParams().id
@@ -55,6 +54,7 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
                         <img src={`https://image.tmdb.org/t/p/w300${movie?.poster_path}`} alt="movie poster" className="rounded-md overflow-hidden md:mr-5 min-w-min max-w-max" />
                         <div>
                           <h2 className="text-2xl font-semibold text-gray-50 mb-3">{movie.title}</h2>
+                          <div className="text-sm font-semibold mb-3 text-gray-200">Status: {movie.status}, Release date: {movie.release_date}</div>
                           <h3 className="text-xl font-semibold mb-3 text-gray-200">{movie.tagline}</h3>
                           <p className="text-gray-200">{movie.overview}</p>
                         </div>
@@ -66,7 +66,6 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
                     <div className="flex flex-wrap justify-center animate-loading-fade">
                       {similarCards}
                     </div>
-                    {/* <ProductionCompanies companies={movie.production_companies} /> */}
                   </>
               }
             </div>
