@@ -5,6 +5,8 @@ import { fetchSimilarMovies } from "../actions/similarMoviesActions"
 import { useParams } from "react-router"
 import Header from "../components/Header"
 import Card from "../components/Card"
+import moment from "moment"
+import { StarIcon } from "@heroicons/react/solid"
 
 const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, similarMoviesLoading, similarMoviesFail, ...props }) => {
   const id = useParams().id
@@ -49,14 +51,31 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
                     </div>
                   </> :
                   <>
-                    <div style={{ backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path})`, backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
-                      <div className="mx-auto flex flex-col md:flex-row animate-loading-fade bg-gray-800 bg-opacity-75">
-                        <img src={`https://image.tmdb.org/t/p/w300${movie?.poster_path}`} alt="movie poster" className="rounded-md overflow-hidden md:mr-5 min-w-min max-w-max" />
-                        <div>
-                          <h2 className="text-2xl font-semibold text-gray-50 mb-3">{movie.title}</h2>
-                          <div className="text-sm font-semibold mb-3 text-gray-200">Status: {movie.status}, Release date: {movie.release_date}</div>
-                          <h3 className="text-xl font-semibold mb-3 text-gray-200">{movie.tagline}</h3>
-                          <p className="text-gray-200">{movie.overview}</p>
+                    <div style={{ backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path})`, backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="rounded-md overflow-hidden">
+                      <div className="mx-auto flex flex-col md:flex-row animate-loading-fade bg-gray-900 bg-opacity-75 p-5 backdrop-filter backdrop-blur">
+                        <img src={`https://image.tmdb.org/t/p/w300${movie?.poster_path}`} alt="movie poster" className="rounded-md overflow-hidden min-w-min h-full mr-5" />
+                        <div className="">
+                          <h2 className="text-5xl font-semibold text-gray-50 mb-5">
+                            <div className="inline-block bg-gray-900 bg-opacity-50 p-2 rounded-md">{movie.title}</div>
+                          </h2>
+                          <div className="flex mb-5">
+                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md max-w-max mr-2">
+                              <StarIcon className="h-5 w-5 text-yellow-400 ml-2" />
+                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-2">{parseFloat(movie.vote_average).toFixed(1)}</span>
+                            </div>
+                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md max-w-max mr-2">
+                              <span className="py-1 pl-2 rounded-md text-gray-50">Status</span>
+                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-2">{movie.status}</span>
+                            </div>
+                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md max-w-max mr-2">
+                              <span className="py-1 pl-2 rounded-md text-gray-50">Release date</span>
+                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-2">{moment(movie?.release_date).format("MMMM D, YYYY")}</span>
+                            </div>
+                          </div>
+                          <div className="bg-gray-900 bg-opacity-50 p-2 rounded-md">
+                            <h3 className="font-semibold text-2xl mb-2 text-gray-200">{movie.tagline}</h3>
+                            <p className="text-gray-200">{movie.overview}</p>
+                          </div>
                         </div>
                       </div>
                     </div>

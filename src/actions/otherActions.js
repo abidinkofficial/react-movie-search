@@ -5,5 +5,5 @@ export const generateRandomId = async () => {
   const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${random}`)
   const data = await response.json()
 
-  return data.results[random].id
+  return data.results[((Math.random() * 10) + 1).toFixed(0)].id
 }

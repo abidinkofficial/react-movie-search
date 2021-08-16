@@ -29,9 +29,9 @@ const Header = ({ context, refresh }) => {
           </div>
         </header>}
       {context === "movie" &&
-        <header className="bg-gradient-to-r from-indigo-900 to-indigo-700 px-4 sm:px-6 lg:px-16">
-          <div className="mx-auto max-w-screen-2xl flex items-center justify-between py-4">
-            <a href="/"><img src={process.env.PUBLIC_URL + "/logo-light.svg"} alt="movie search logo" /></a>
+        <header className="bg-gradient-to-r from-indigo-900 to-indigo-700 px-4 md:px-12 xl:px-16">
+        <div className="mx-auto max-w-screen-2xl flex flex-col xs:flex-row items-start xs:items-center justify-between border-b border-gray-900 border-opacity-30 py-5">
+            <a href="/" className="cursor-pointer mb-3 xs:mb-0"><img src={process.env.PUBLIC_URL + "/logo-light.svg"} alt="movie search logo" /></a>
             <a href="https://github.com/abidinkofficial/react-movie-search" target="_blank" rel="noreferrer" className="flex items-center justify-center bg-gray-50 hover:bg-gray-200 rounded-md hover:shadow-md py-4 px-4 text-sm text-gray-800 transition-colors h-8"><span style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/github-64.png)`, backgroundSize: "1rem", backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="w-6 h-6 mr-1"></span>View on GitHub</a>
           </div>
         </header>}
