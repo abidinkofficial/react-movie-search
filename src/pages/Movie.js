@@ -2,21 +2,36 @@ import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { fetchMovie } from "../actions/movieActions"
 import { fetchSimilarMovies } from "../actions/similarMoviesActions"
+import { fetchKeywords } from "../actions/keywordsActions"
 import { useParams } from "react-router"
 import Header from "../components/Header"
 import Card from "../components/Card"
+import Cast from "../components/Cast"
 import moment from "moment"
 import { StarIcon } from "@heroicons/react/solid"
 
-const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, similarMoviesLoading, similarMoviesFail, ...props }) => {
+const Movie = (
+  {
+    dispatch,
+    movie,
+    movieLoading,
+    movieFail,
+    similarMovies,
+    similarMoviesLoading,
+    similarMoviesFail,
+    keywords,
+    ...props
+  }) => {
   const id = useParams().id
 
   const [similarCards, setSimilarCards] = useState([])
   const [customLoading, setCustomLoading] = useState(false)
+  const [posterUrl, setPosterUrl] = useState(null)
 
   useEffect(() => {
     dispatch(fetchMovie(id))
     dispatch(fetchSimilarMovies(id))
+    dispatch(fetchKeywords(id))
   }, [dispatch, id])
 
   useEffect(() => {
@@ -27,6 +42,10 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
   useEffect(() => {
     (movieLoading || similarMoviesLoading) ? setCustomLoading(true) : setTimeout(() => setCustomLoading(false), 500)
   }, [movieLoading, similarMoviesLoading])
+
+  useEffect(() => {
+    movie.poster_path ? setPosterUrl(`https://image.tmdb.org/t/p/w300${movie.poster_path}`) : setPosterUrl(`${process.env.PUBLIC_URL}/poster-fallback-w300.png`)
+  }, [movie])
 
   return (
     <>
@@ -53,8 +72,10 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
                   <>
                     <div style={{ backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path})`, backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="rounded-md overflow-hidden">
                       <div className="mx-auto flex flex-col md:flex-row animate-loading-fade bg-gray-900 bg-opacity-75 p-5 backdrop-filter backdrop-blur">
-                        <img src={`https://image.tmdb.org/t/p/w300${movie?.poster_path}`} alt="movie poster" className="rounded-md overflow-hidden min-w-min h-full mr-5" />
-                        <div className="">
+                        <div className="min-w-max h-full my-auto">
+                          <img src={posterUrl} alt="movie poster" className="rounded-md overflow-hidden min-w-min h-full mr-5" />
+                        </div>
+                        <div className="h-full">
                           <h2 className="text-5xl font-semibold text-gray-50 mb-5">
                             <div className="inline-block bg-gray-900 bg-opacity-50 p-2 rounded-md">{movie.title}</div>
                           </h2>
@@ -72,10 +93,17 @@ const Movie = ({ dispatch, movie, movieLoading, movieFail, similarMovies, simila
                               <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-2">{moment(movie?.release_date).format("MMMM D, YYYY")}</span>
                             </div>
                           </div>
-                          <div className="bg-gray-900 bg-opacity-50 p-2 rounded-md">
+                          <div className="bg-gray-900 bg-opacity-50 p-2 rounded-md mb-5">
                             <h3 className="font-semibold text-2xl mb-2 text-gray-200">{movie.tagline}</h3>
                             <p className="text-gray-200">{movie.overview}</p>
                           </div>
+                          <div className="bg-gray-900 bg-opacity-50 rounded-md flex flex-wrap max-w-max mb-5">
+                            <h4 className="text-sm my-2 mx-1">Keywords:</h4>
+                            {keywords?.keywords ?
+                              keywords?.keywords.slice(0, 5).map(keyword => <div key={keyword.id} className="flex items-center text-sm bg-gray-900 bg-opacity-50 text-gray-200 border border-gray-700 rounded-md my-2 mx-1 px-2">{keyword.name}</div>) :
+                              <div className="flex items-center text-sm bg-gray-900 bg-opacity-50 text-gray-200 border border-gray-700 rounded-md my-2 mx-1 px-2">Not available.</div>}
+                          </div>
+                          <Cast id={id} />
                         </div>
                       </div>
                     </div>
@@ -102,7 +130,9 @@ const mapStateToProps = (state) => ({
 
   similarMoviesLoading: state.similarMovies.loading,
   similarMovies: state.similarMovies.similarMovies,
-  similarMoviesFail: state.similarMovies.hasErrors
+  similarMoviesFail: state.similarMovies.hasErrors,
+
+  keywords: state.keywords.keywords,
 })
 
 export default connect(mapStateToProps)(Movie);
