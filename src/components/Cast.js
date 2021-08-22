@@ -14,7 +14,7 @@ const Cast = ({ dispatch, credits, creditsLoading, creditsFail, id }) => {
       <div className="flex flex-wrap">
         {
           credits?.cast?.length > 0 ? credits?.cast?.slice(0, 5).map(cast =>
-            <div className="bg-gray-900 bg-opacity-50 pb-2 w-24 rounded-md flex flex-col items-center mr-1">
+            <div key={cast.id} className="bg-gray-900 bg-opacity-50 pb-2 w-24 rounded-md flex flex-col items-center mr-1">
               <div className="w-20 h-20 flex items-center justify-center">
                 <div className="rounded-full overflow-hidden w-16 h-16" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w200${cast.profile_path}), url(${process.env.PUBLIC_URL}/actor-placeholder.png)`, backgroundSize: "100%", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} />
               </div>

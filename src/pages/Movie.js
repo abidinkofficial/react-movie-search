@@ -7,6 +7,7 @@ import { useParams } from "react-router"
 import Header from "../components/Header"
 import Card from "../components/Card"
 import Cast from "../components/Cast"
+import Video from "../components/Video"
 import moment from "moment"
 import { StarIcon } from "@heroicons/react/solid"
 
@@ -36,7 +37,7 @@ const Movie = (
 
   useEffect(() => {
     setSimilarCards([])
-    similarMovies?.results?.slice(0, 5).map((result) => setSimilarCards((similarCards) => [...similarCards, <Card movie={result} key={result.id} />]))
+    similarMovies?.results?.slice(0, 5).map((result) => setSimilarCards((similarCards) => [...similarCards, <Card movie={result} key={result.id} similar={true} />]))
   }, [similarMovies])
 
   useEffect(() => {
@@ -70,7 +71,7 @@ const Movie = (
                     </div>
                   </> :
                   <>
-                    <div style={{ backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path})`, backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="rounded-md overflow-hidden">
+                    <div style={{ backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path})`, backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="rounded-md overflow-hidden mb-5">
                       <div className="mx-auto flex flex-col md:flex-row animate-loading-fade bg-gray-900 bg-opacity-75 p-5 backdrop-filter backdrop-blur">
                         <div className="min-w-max h-full my-auto">
                           <img src={posterUrl} alt="movie poster" className="rounded-md overflow-hidden min-w-min h-full mr-5" />
@@ -107,11 +108,21 @@ const Movie = (
                         </div>
                       </div>
                     </div>
-                    <div className="flex my-5 animate-loading-fade">
-                      <h2 className="text-2xl font-semibold mr-5">Similar movies:</h2>
-                    </div>
-                    <div className="flex flex-wrap justify-center animate-loading-fade">
-                      {similarCards}
+                    <div className="flex flex-col">
+                      <div className="flex flex-col bg-gradient-to-b from-gray-100 to-gray-50 p-5 rounded-md mb-5">
+                        <div className="text-xl text-gray-50 mb-5">
+                          <span className="bg-indigo-900 py-1 px-2 rounded-md">Watch trailer</span>
+                        </div>
+                        <Video id={id} />
+                      </div>
+                      <div className="flex flex-col bg-gradient-to-b from-gray-100 to-gray-50 p-5 rounded-md mb-5">
+                        <div className="text-xl text-gray-50 mb-5">
+                          <span className="bg-indigo-900 py-1 px-2 rounded-md">Similar movies</span>
+                        </div>
+                        <div className="ml-0 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 max-w-max mx-auto">
+                          {similarCards}
+                        </div>
+                      </div>
                     </div>
                   </>
               }
