@@ -19,7 +19,7 @@ const Video = ({ dispatch, videos, videosLoading, videosFail, id }) => {
       {
         videoPath ?
         <iframe className="rounded-md overflow-hidden" allowFullScreen title="ytplayer" id="ytplayer" type="text/html" width="640" height="360"
-          src={`http://www.youtube.com/embed/${videoPath}?autoplay=0&origin=http://example.com`}
+          src={`https://www.youtube.com/embed/${videoPath}?autoplay=0&origin=http://example.com`}
           frameBorder="0" /> :
           <div className="flex items-center text-sm bg-gray-700 text-gray-200 border border-gray-700 rounded-md px-2 max-w-max">
             Trailer is not available.
