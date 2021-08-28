@@ -72,26 +72,26 @@ const Movie = (
                   </> :
                   <>
                     <div style={{ backgroundImage: `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${movie?.backdrop_path})`, backgroundRepeat: "no-repeat", backgroundPosition: "center" }} className="rounded-md overflow-hidden mb-5">
-                      <div className="mx-auto flex flex-col md:flex-row animate-loading-fade bg-gray-900 bg-opacity-75 p-5 backdrop-filter backdrop-blur">
-                        <div className="min-w-max h-full my-auto">
+                      <div className="mx-auto flex flex-col lg:flex-row animate-loading-fade bg-gray-900 bg-opacity-75 p-5 backdrop-filter backdrop-blur">
+                        <div className="min-w-max h-full my-auto mb-5 lg:mb-auto">
                           <img src={posterUrl} alt="movie poster" className="rounded-md overflow-hidden min-w-min h-full mr-5" />
                         </div>
                         <div className="h-full">
                           <h2 className="text-5xl font-semibold text-gray-50 mb-5">
                             <div className="inline-block bg-gray-900 bg-opacity-50 p-2 rounded-md">{movie.title}</div>
                           </h2>
-                          <div className="flex mb-5">
-                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md max-w-max mr-2">
+                          <div className="flex flex-col sm:flex-row">
+                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md w-full sm:max-w-max mr-2 mb-5">
                               <StarIcon className="h-5 w-5 text-yellow-400 ml-2" />
-                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-2">{parseFloat(movie.vote_average).toFixed(1)}</span>
+                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-auto sm:ml-2">{parseFloat(movie.vote_average).toFixed(1)}</span>
                             </div>
-                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md max-w-max mr-2">
+                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md w-full sm:max-w-max mr-2 mb-5">
                               <span className="py-1 pl-2 rounded-md text-gray-50">Status</span>
-                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-2">{movie.status}</span>
+                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-auto sm:ml-2">{movie.status}</span>
                             </div>
-                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md max-w-max mr-2">
+                            <div className="flex items-center text-sm font-semibold bg-gray-900 bg-opacity-50 rounded-md w-full sm:max-w-max mr-2 mb-5">
                               <span className="py-1 pl-2 rounded-md text-gray-50">Release date</span>
-                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-2">{moment(movie?.release_date).format("MMMM D, YYYY")}</span>
+                              <span className="bg-gray-50 text-gray-900 p-1 rounded-md ml-auto sm:ml-2">{moment(movie?.release_date).format("MMMM D, YYYY")}</span>
                             </div>
                           </div>
                           <div className="bg-gray-900 bg-opacity-50 p-2 rounded-md mb-5">
@@ -115,11 +115,11 @@ const Movie = (
                         </div>
                         <Video id={id} />
                       </div>
-                      <div className="flex flex-col bg-gradient-to-b from-gray-100 to-gray-50 p-5 rounded-md mb-5">
+                      <div className="flex flex-col bg-gradient-to-b from-gray-100 to-gray-50 py-5 px-3 sm:px-5 rounded-md mb-5">
                         <div className="text-xl text-gray-50 mb-5">
                           <span className="bg-indigo-900 py-1 px-2 rounded-md">Similar movies</span>
                         </div>
-                        <div className="ml-0 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 max-w-max mx-auto">
+                        <div className="ml-0 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 max-w-max mx-auto">
                           {similarCards}
                         </div>
                       </div>

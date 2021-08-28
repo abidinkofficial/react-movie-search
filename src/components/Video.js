@@ -15,10 +15,10 @@ const Video = ({ dispatch, videos, videosLoading, videosFail, id }) => {
   }, [videos])
 
   return (
-    <div>
+    <div className="overflow-hidden">
       {
         videoPath ?
-        <iframe className="rounded-md overflow-hidden" allowFullScreen title="ytplayer" id="ytplayer" type="text/html" width="640" height="360"
+        <iframe className="rounded-md overflow-hidden w-full max-w-xl" allowFullScreen title="ytplayer" id="ytplayer" type="text/html" width="640" height="360"
           src={`https://www.youtube.com/embed/${videoPath}?autoplay=0&origin=http://example.com`}
           frameBorder="0" /> :
           <div className="flex items-center text-sm bg-gray-700 text-gray-200 border border-gray-700 rounded-md px-2 max-w-max">
