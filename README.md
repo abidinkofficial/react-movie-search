@@ -4,6 +4,8 @@ Movie Search is a React based web application that lists trending movies or prov
 
 🔗 Try it live: [https://react-movie-search-abidinkofficial.vercel.app/](https://react-movie-search-abidinkofficial.vercel.app/)
 
+![movie search home page](https://raw.githubusercontent.com/abidinkofficial/react-movie-search/master/presentation/movie-search-browser.png)
+
 ## Features
 
 * Based on technologies like React, Redux (with Thunk) and Tailwind. Data is provided by TMDB API.
