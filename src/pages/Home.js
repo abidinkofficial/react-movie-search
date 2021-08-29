@@ -66,12 +66,12 @@ const Home = ({ dispatch, trendingsLoading, trendings, trendingsHasErrors, searc
       <Header context="home" refresh={refresh} />
       <main>
         <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-16 py-5">
+        <div className="mx-auto max-w-screen-2xl px-2 2xs:px-4 sm:px-6 lg:px-16 py-5">
           <div className="flex flex-col md:flex-row my-5">
             <h2 className="text-2xl font-semibold mr-5 mb-5 md:mb-0">{searchQuery ? "Search results:" : "Trending movies:"}</h2>
             {!searchQuery && <TrendingSwitch trendingsSwitch={trendingsSwitch} setTrendingsSwitch={setTrendingsSwitch} />}
           </div>
-          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 max-w-max mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 max-w-max mx-auto">
             {movieCards}
             <LoadMoreCard page={page} setPage={setPage} />
           </div>
